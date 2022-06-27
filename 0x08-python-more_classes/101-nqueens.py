@@ -1,46 +1,68 @@
 #!/usr/bin/python3
+
 """
-    unit test for the class Rectangle
+This is a module for N queens.
 """
-import unittest
-Rectangle = __import__('1-rectangle').Rectangle
 
+if __name__ == '__main__':
 
-class TestClassRectangle(unittest.TestCase):
-    """
-        test class for the Rectangle class instances
-    """
-    def test_type_class(self):
-        """
-            Checks the class of the instance
-        """
-        r = Rectangle()
-        self.assertIsInstance(r, Rectangle)
+    import sys
 
-    def test_typeError(self):
-        """
-            Checks for typeerrors raised
-        """
-        with self.assertRaises(TypeError):
-            r = Rectangle("hi", 5)
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        sys.exit(1)
+    try:
+        size = int(sys.argv[1])
+    except BaseException:
+        print("N must be a number")
+        sys.exit(1)
+    if size < 4:
+        print("N must be at least 4")
+        sys.exit(1)
 
-        with self.assertRaises(TypeError):
-            r = Rectangle(5, "hi")
+    def startSolve():
+        b = [[0 for j in range(size)] for i in range(size)]
+        checkRecursive(b, 0)
+        return
 
-    def test_valueError(self):
-        """
-            checks for value errors raised
-        """
-        with self.assertRaises(ValueError):
-            r = Rectangle(-5, 9)
-        with self.assertRaises(ValueError):
-            r = Rectangle(9, -5)
+    def checkRecursive(b, c):
+        if (c == size):
+            solution(b)
+            return True
+        ret = False
+        for i in range(size):
+            if (checkPosition(b, i, c)):
+                b[i][c] = 1
+                ret = checkRecursive(b, c + 1) or ret
+                b[i][c] = 0
+        return ret
 
-    def test_noarguments(self):
-        """
-            checks for when no arguments are passed
-        """
-        r = Rectangle()
-        
-        self.assertAlmostEqual(r.width, 0)
-        self.assertAlmostEqual(r.height, 0)
+    def checkPosition(b, r, c):
+        for i in range(c):
+            if (b[r][i]):
+                return False
+        i = r
+        j = c
+        while i >= 0 and j >= 0:
+            if(b[i][j]):
+                return False
+            i = i - 1
+            j = j - 1
+        i = r
+        j = c
+        while j >= 0 and i < size:
+            if(b[i][j]):
+                return False
+            i = i + 1
+            j = j - 1
+        return True
+
+    def solution(b):
+        solve = []
+        for i in range(size):
+            for j in range(size):
+                if(b[i][j] is 1):
+                    solve.append([i, j])
+        print(solve)
+        solve.clear()
+    startSolve()
