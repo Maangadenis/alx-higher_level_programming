@@ -1,7 +1,2 @@
 #!/usr/bin/node
-
-// Script that contains a visible function
-
-exports.add = function (a, b) {
-  return a + b;
-};
+exports.add = (a, b) => a + b;
