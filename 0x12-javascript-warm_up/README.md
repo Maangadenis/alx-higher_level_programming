@@ -97,4 +97,4 @@ What you should learn from this project:
 ---
 
 ## Author
-* **Reese Hicks** - [dreeseh](https://github.com/dreeseh)
+* **Denis Maanga** - [Maangadenis](https://github.com/Maangadenis)
